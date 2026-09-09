@@ -1,0 +1,93 @@
+{
+  "pages": [
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/family/create",
+      "style": {
+        "navigationBarTitleText": "创建家庭",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/family/detail",
+      "style": {
+        "navigationBarTitleText": "家庭详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/family/member",
+      "style": {
+        "navigationBarTitleText": "家庭成员",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/device/add",
+      "style": {
+        "navigationBarTitleText": "添加设备",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/device/control",
+      "style": {
+        "navigationBarTitleText": "设备控制",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/scene/create",
+      "style": {
+        "navigationBarTitleText": "创建场景",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "navigationStyle": "custom"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "智能控制",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#8B4513",
+    "borderStyle": "black",
+    "backgroundColor": "#FFFAF0",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/family/detail",
+        "text": "家庭"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  }
+}

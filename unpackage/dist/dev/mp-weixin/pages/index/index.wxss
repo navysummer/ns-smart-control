@@ -1,0 +1,177 @@
+
+.container.data-v-57280228 {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFFAF0 0%, #FFF8DC 100%);
+  padding-bottom: 120rpx;
+}
+.nav-bar.data-v-57280228 {
+  background: linear-gradient(135deg, #8B4513 0%, #CD853F 100%);
+  padding: 80rpx 40rpx 40rpx;
+  border-radius: 0 0 40rpx 40rpx;
+}
+.nav-title.data-v-57280228 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title-text.data-v-57280228 {
+  font-size: 48rpx;
+  color: #FFFAF0;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.subtitle-text.data-v-57280228 {
+  font-size: 24rpx;
+  color: #DEB887;
+  margin-top: 8rpx;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.family-section.data-v-57280228, .device-section.data-v-57280228, .scene-section.data-v-57280228 {
+  margin: 30rpx 30rpx;
+}
+.section-header.data-v-57280228 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.section-title.data-v-57280228 {
+  font-size: 32rpx;
+  color: #2F1810;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.add-btn.data-v-57280228 {
+  width: 48rpx;
+  height: 48rpx;
+  background: #8B4513;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-icon.data-v-57280228 {
+  color: #FFFAF0;
+  font-size: 32rpx;
+}
+.empty-state.data-v-57280228 {
+  background: #FFF8DC;
+  border: 2rpx dashed #D2B48C;
+  border-radius: 20rpx;
+  padding: 60rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-icon.data-v-57280228 {
+  font-size: 64rpx;
+  margin-bottom: 16rpx;
+}
+.empty-text.data-v-57280228 {
+  font-size: 26rpx;
+  color: #8B7355;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.family-scroll.data-v-57280228 {
+  white-space: nowrap;
+}
+.family-card.data-v-57280228 {
+  display: inline-block;
+  width: 280rpx;
+  padding: 30rpx;
+  background: #FFF8DC;
+  border-radius: 20rpx;
+  margin-right: 20rpx;
+  border: 2rpx solid #D2B48C;
+}
+.family-card.active.data-v-57280228 {
+  border-color: #8B4513;
+  background: linear-gradient(135deg, #FFF8DC 0%, #FFFAF0 100%);
+}
+.family-name.data-v-57280228 {
+  font-size: 30rpx;
+  color: #2F1810;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.family-desc.data-v-57280228 {
+  font-size: 24rpx;
+  color: #8B7355;
+  margin-top: 10rpx;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.device-grid.data-v-57280228 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+.device-card.data-v-57280228 {
+  width: calc(50% - 10rpx);
+  background: #FFF8DC;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  border: 2rpx solid #D2B48C;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.device-icon.data-v-57280228 {
+  width: 100rpx;
+  height: 100rpx;
+  background: linear-gradient(135deg, #DEB887 0%, #D2B48C 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-text.data-v-57280228 {
+  font-size: 48rpx;
+}
+.device-name.data-v-57280228 {
+  font-size: 28rpx;
+  color: #2F1810;
+  margin-top: 16rpx;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.device-status.data-v-57280228 {
+  font-size: 22rpx;
+  color: #8B7355;
+  margin-top: 8rpx;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.device-switch.data-v-57280228 {
+  margin-top: 16rpx;
+}
+.scene-list.data-v-57280228 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+.scene-card.data-v-57280228 {
+  width: calc(33.33% - 14rpx);
+  background: linear-gradient(135deg, #FFF8DC 0%, #FFFAF0 100%);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  border: 2rpx solid #D2B48C;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.scene-icon.data-v-57280228 {
+  font-size: 48rpx;
+}
+.scene-name.data-v-57280228 {
+  font-size: 26rpx;
+  color: #2F1810;
+  margin-top: 12rpx;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.scene-desc.data-v-57280228 {
+  font-size: 20rpx;
+  color: #8B7355;
+  margin-top: 8rpx;
+  text-align: center;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+

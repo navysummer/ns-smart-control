@@ -1,0 +1,158 @@
+
+.create-scene-container.data-v-f351fd50 {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFFAF0 0%, #FFF8DC 100%);
+}
+.nav-bar.data-v-f351fd50 {
+  display: flex;
+  align-items: center;
+  padding: 80rpx 40rpx 30rpx;
+  background: linear-gradient(135deg, #8B4513 0%, #CD853F 100%);
+}
+.back-btn.data-v-f351fd50 {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-icon.data-v-f351fd50 { font-size: 40rpx; color: #FFFAF0;
+}
+.nav-title.data-v-f351fd50 {
+  flex: 1;
+  text-align: center;
+  font-size: 36rpx;
+  color: #FFFAF0;
+  font-weight: bold;
+  margin-right: 60rpx;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.content.data-v-f351fd50 { padding: 30rpx;
+}
+.form-card.data-v-f351fd50 {
+  background: #FFF8DC;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  border: 2rpx solid #D2B48C;
+  margin-bottom: 30rpx;
+}
+.input-group.data-v-f351fd50 { margin-bottom: 24rpx;
+}
+.input-group.data-v-f351fd50:last-child { margin-bottom: 0;
+}
+.input-label.data-v-f351fd50 {
+  font-size: 26rpx;
+  color: #2F1810;
+  margin-bottom: 12rpx;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.input-field.data-v-f351fd50 {
+  width: 100%;
+  height: 80rpx;
+  background: #FFFAF0;
+  border: 2rpx solid #D2B48C;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  color: #2F1810;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.icon-grid.data-v-f351fd50 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+.icon-option.data-v-f351fd50 {
+  width: 80rpx;
+  height: 80rpx;
+  background: #FFFAF0;
+  border: 2rpx solid #D2B48C;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-option.active.data-v-f351fd50 {
+  border-color: #8B4513;
+  background: linear-gradient(135deg, #FFF8DC 0%, #FFFAF0 100%);
+}
+.icon-text.data-v-f351fd50 { font-size: 40rpx;
+}
+.device-section.data-v-f351fd50 { margin-bottom: 30rpx;
+}
+.section-title.data-v-f351fd50 {
+  font-size: 28rpx;
+  color: #2F1810;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.section-hint.data-v-f351fd50 {
+  font-size: 24rpx;
+  color: #8B7355;
+  margin-bottom: 16rpx;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.empty-hint.data-v-f351fd50 {
+  font-size: 24rpx;
+  color: #8B7355;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.device-list.data-v-f351fd50 {
+  background: #FFF8DC;
+  border-radius: 16rpx;
+  border: 2rpx solid #D2B48C;
+  overflow: hidden;
+}
+.device-item.data-v-f351fd50 {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #D2B48C;
+}
+.device-item.data-v-f351fd50:last-child { border-bottom: none;
+}
+.device-item.selected.data-v-f351fd50 {
+  background: linear-gradient(135deg, #FFF8DC 0%, #FFFAF0 100%);
+}
+.device-icon.data-v-f351fd50 { font-size: 32rpx; margin-right: 16rpx;
+}
+.device-name.data-v-f351fd50 {
+  flex: 1;
+  font-size: 28rpx;
+  color: #2F1810;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.device-check.data-v-f351fd50 {
+  font-size: 28rpx;
+  color: #8B4513;
+  font-weight: bold;
+}
+.create-btn.data-v-f351fd50 {
+  width: 100%;
+  height: 96rpx;
+  background: linear-gradient(135deg, #8B4513 0%, #CD853F 100%);
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-text.data-v-f351fd50 {
+  font-size: 32rpx;
+  color: #FFFAF0;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.poem-section.data-v-f351fd50 { text-align: center; margin-top: 40rpx;
+}
+.poem-text.data-v-f351fd50 {
+  font-size: 24rpx;
+  color: #8B7355;
+  font-style: italic;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+

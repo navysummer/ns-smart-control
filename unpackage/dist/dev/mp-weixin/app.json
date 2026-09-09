@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/index/index",
+    "pages/family/create",
+    "pages/family/detail",
+    "pages/family/member",
+    "pages/device/add",
+    "pages/device/control",
+    "pages/scene/create",
+    "pages/profile/index"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "智能控制",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#8B4513",
+    "borderStyle": "black",
+    "backgroundColor": "#FFFAF0",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/family/detail",
+        "text": "家庭"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取位置信息"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "usingComponents": {}
+}

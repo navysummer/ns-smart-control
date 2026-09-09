@@ -1,0 +1,246 @@
+
+.family-detail-container.data-v-7503589a {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFFAF0 0%, #FFF8DC 100%);
+  padding-bottom: 120rpx;
+}
+.nav-bar.data-v-7503589a {
+  display: flex;
+  align-items: center;
+  padding: 80rpx 40rpx 30rpx;
+  background: linear-gradient(135deg, #8B4513 0%, #CD853F 100%);
+}
+.back-btn.data-v-7503589a, .more-btn.data-v-7503589a {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-icon.data-v-7503589a { font-size: 40rpx; color: #FFFAF0;
+}
+.more-icon.data-v-7503589a { font-size: 40rpx; color: #FFFAF0;
+}
+.nav-title.data-v-7503589a {
+  flex: 1;
+  text-align: center;
+  font-size: 36rpx;
+  color: #FFFAF0;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.content.data-v-7503589a { padding: 30rpx;
+}
+.family-info-card.data-v-7503589a {
+  background: #FFF8DC;
+  border-radius: 30rpx;
+  padding: 40rpx;
+  border: 2rpx solid #D2B48C;
+  margin-bottom: 30rpx;
+}
+.family-header.data-v-7503589a {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+.family-icon.data-v-7503589a {
+  width: 120rpx;
+  height: 120rpx;
+  background: linear-gradient(135deg, #DEB887 0%, #D2B48C 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30rpx;
+}
+.icon-text.data-v-7503589a { font-size: 60rpx;
+}
+.family-info.data-v-7503589a { flex: 1;
+}
+.family-name.data-v-7503589a {
+  font-size: 36rpx;
+  color: #2F1810;
+  font-weight: bold;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.family-desc.data-v-7503589a {
+  font-size: 24rpx;
+  color: #8B7355;
+  margin-top: 8rpx;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.family-stats.data-v-7503589a {
+  display: flex;
+  justify-content: space-around;
+  border-top: 2rpx solid #D2B48C;
+  padding-top: 30rpx;
+}
+.stat-item.data-v-7503589a { display: flex; flex-direction: column; align-items: center;
+}
+.stat-value.data-v-7503589a {
+  font-size: 40rpx;
+  color: #8B4513;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.stat-label.data-v-7503589a {
+  font-size: 22rpx;
+  color: #8B7355;
+  margin-top: 8rpx;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.quick-actions.data-v-7503589a {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+}
+.action-card.data-v-7503589a {
+  width: calc(25% - 15rpx);
+  background: #FFF8DC;
+  border-radius: 20rpx;
+  padding: 24rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2rpx solid #D2B48C;
+}
+.action-icon.data-v-7503589a { font-size: 48rpx;
+}
+.action-text.data-v-7503589a {
+  font-size: 22rpx;
+  color: #2F1810;
+  margin-top: 12rpx;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.section.data-v-7503589a { margin-bottom: 30rpx;
+}
+.section-header.data-v-7503589a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.section-title.data-v-7503589a {
+  font-size: 32rpx;
+  color: #2F1810;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.empty-state.data-v-7503589a {
+  background: #FFF8DC;
+  border: 2rpx dashed #D2B48C;
+  border-radius: 20rpx;
+  padding: 60rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-icon.data-v-7503589a { font-size: 64rpx; margin-bottom: 16rpx;
+}
+.empty-text.data-v-7503589a {
+  font-size: 26rpx;
+  color: #8B7355;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.device-list.data-v-7503589a {
+  background: #FFF8DC;
+  border-radius: 20rpx;
+  border: 2rpx solid #D2B48C;
+}
+.device-item.data-v-7503589a {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #D2B48C;
+}
+.device-item.data-v-7503589a:last-child { border-bottom: none;
+}
+.device-icon.data-v-7503589a {
+  width: 80rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #DEB887 0%, #D2B48C 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+.device-info.data-v-7503589a { flex: 1;
+}
+.device-name.data-v-7503589a {
+  font-size: 28rpx;
+  color: #2F1810;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.device-status.data-v-7503589a {
+  font-size: 22rpx;
+  color: #8B7355;
+  margin-top: 6rpx;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.scene-list.data-v-7503589a {
+  background: #FFF8DC;
+  border-radius: 20rpx;
+  border: 2rpx solid #D2B48C;
+}
+.scene-card.data-v-7503589a {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #D2B48C;
+}
+.scene-card.data-v-7503589a:last-child { border-bottom: none;
+}
+.scene-icon.data-v-7503589a { font-size: 48rpx; margin-right: 24rpx;
+}
+.scene-info.data-v-7503589a { flex: 1;
+}
+.scene-name.data-v-7503589a {
+  font-size: 28rpx;
+  color: #2F1810;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.scene-desc.data-v-7503589a {
+  font-size: 22rpx;
+  color: #8B7355;
+  margin-top: 6rpx;
+  display: block;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.scene-arrow.data-v-7503589a {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.arrow-icon.data-v-7503589a { font-size: 28rpx; color: #8B7355;
+}
+.empty-state-full.data-v-7503589a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 200rpx 0;
+}
+.create-btn.data-v-7503589a {
+  margin-top: 40rpx;
+  width: 300rpx;
+  height: 88rpx;
+  background: linear-gradient(135deg, #8B4513 0%, #CD853F 100%);
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-text.data-v-7503589a {
+  font-size: 28rpx;
+  color: #FFFAF0;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+
