@@ -264,9 +264,23 @@ export const updateDevice = (deviceId, data) => {
 }
 
 /**
- * 批量更新设备（用于场景激活等一次性操作）
+ * 批量更新设备（用于场景激活/一键全开等一次性操作）
+ * 支持两种调用方式：
+ *   1) batchUpdateDevices([{deviceId, data, action}, ...])  —— 每台设备独立字段
+ *   2) batchUpdateDevices(ids[], patch[, action])           —— 多台设备统一应用同一个 patch
  */
-export const batchUpdateDevices = (list = []) => {
+export const batchUpdateDevices = (arg1, arg2, arg3) => {
+  let list = []
+  if (Array.isArray(arg1) && (typeof arg1[0] === 'object' && arg1[0] !== null && !Array.isArray(arg1[0]))) {
+    // 形式 1：元素是 {deviceId, data, action} 对象数组
+    list = arg1
+  } else if (Array.isArray(arg1) && arg2 && typeof arg2 === 'object') {
+    // 形式 2：ids 数组 + 统一 patch
+    list = arg1.map(id => ({ deviceId: id, data: arg2, action: arg3 || '批量更新' }))
+  } else if (Array.isArray(arg1)) {
+    // 只给了 ids，没 patch，忽略
+    return
+  }
   list.forEach(({ deviceId, data, action }) => {
     const device = store.devices.find(d => d.id === deviceId)
     if (device) {
@@ -543,6 +557,40 @@ export const seedDemoData = () => {
   })
 
   saveLocal()
+}
+
+/**
+ * 清空所有业务数据（家庭/设备/场景/成员），保留登录态
+ */
+export const resetDemoData = () => {
+  store.families = []
+  store.devices = []
+  store.scenes = []
+  store.members = []
+  store.currentFamilyId = null
+  uni.removeStorageSync('appData')
+  notify()
+}
+
+/**
+ * 先清空再重新注入示例数据（用于我的页「恢复示例」按钮）
+ */
+export const reSeedDemoData = () => {
+  resetDemoData()
+  // seedDemoData 里要求 families 为空才会执行；而且会 saveLocal
+  seedDemoData()
+  if (!store.currentFamilyId && store.families[0]) {
+    setCurrentFamily(store.families[0].id)
+  }
+}
+
+/**
+ * 是否为示例数据（id 带 demo_ 前缀），供 UI 判断
+ */
+export const hasDemoData = () => {
+  return store.devices.some(d => String(d.id).includes('demo_')) ||
+    store.scenes.some(s => String(s.id).includes('demo_')) ||
+    store.families.some(f => String(f.id).includes('demo_'))
 }
 
 // ---------- 辅助：设备图标字典 ----------

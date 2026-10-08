@@ -76,6 +76,19 @@
         </view>
       </view>
 
+      <view class="default-section" v-if="selectedType">
+        <text class="section-title">默认预设参数</text>
+        <view class="default-card">
+          <view class="default-row" v-for="item in defaultPreview" :key="item.label">
+            <text class="default-label">{{ item.label }}</text>
+            <text class="default-value">{{ item.value }}</text>
+          </view>
+          <view class="default-tip" v-if="!defaultPreview.length">
+            <text class="default-tip-text">此设备暂无需预填参数，将默认关机。</text>
+          </view>
+        </view>
+      </view>
+
       <view class="scan-section">
         <view class="scan-btn" @tap="scanDevice">
           <text class="scan-icon">📷</text>
@@ -96,7 +109,7 @@
 </template>
 
 <script>
-import { addDevice, getCurrentUserRole } from '@/store/index.js'
+import { addDevice, getCurrentUserRole, getDeviceDefaultConfig, getDeviceTypeName, getDeviceIcon } from '@/store/index.js'
 
 const BRAND_KEYWORDS = {
   huawei: ['华为', 'huawei', 'HUAWEI', 'hiLink', 'hilink'],
@@ -115,7 +128,23 @@ const TYPE_KEYWORDS = {
   sensor: ['传感器', '温度', '湿度', '烟雾', 'sensor'],
   washer: ['洗衣机', '洗烘', 'washer'],
   fridge: ['冰箱', 'fridge'],
-  oven: ['烤箱', '微波炉', 'oven']
+  oven: ['烤箱', '微波炉', 'oven'],
+  camera: ['摄像头', '摄像机', '监控', 'camera', 'cam']
+}
+
+// 古风默认名（位置会作为前缀填到设备名建议里）
+const TYPE_DEFAULT_NAME_SUFFIX = {
+  light: '雅致明灯',
+  ac: '清风雅调',
+  curtain: '疏帘半卷',
+  tv: '闲观影音',
+  speaker: '山水清音',
+  air: '净室香风',
+  sensor: '四时感应',
+  washer: '浣衣清尘',
+  fridge: '玉壶冰心',
+  oven: '文火匠心',
+  camera: '观瞻在侧'
 }
 
 export default {
@@ -143,9 +172,12 @@ export default {
         { id: 'speaker', name: '音箱', icon: '🔊' },
         { id: 'sensor', name: '传感器', icon: '📡' },
         { id: 'air', name: '净化器', icon: '🌬️' },
-        { id: 'washer', name: '洗衣机', icon: '🧺' }
+        { id: 'washer', name: '洗衣机', icon: '🧺' },
+        { id: 'fridge', name: '冰箱', icon: '🧊' },
+        { id: 'oven', name: '烤箱', icon: '🍳' },
+        { id: 'camera', name: '摄像头', icon: '📷' }
       ],
-      locations: ['客厅', '卧室', '厨房', '书房', '阳台', '卫生间']
+      locations: ['客厅', '卧室', '厨房', '书房', '阳台', '卫生间', '玄关', '餐厅']
     }
   },
   onLoad() {
@@ -154,6 +186,59 @@ export default {
       setTimeout(() => {
         uni.navigateBack()
       }, 800)
+    }
+  },
+  computed: {
+    defaultPreview() {
+      if (!this.selectedType) return []
+      const cfg = getDeviceDefaultConfig(this.selectedType) || {}
+      const rows = []
+      if (cfg.isPowerOn != null) rows.push({ label: '初始状态', value: cfg.isPowerOn ? '开启' : '关闭' })
+      if (cfg.isOnline != null) rows.push({ label: '联网状态', value: cfg.isOnline ? '在线' : '离线' })
+      switch (this.selectedType) {
+        case 'light':
+          rows.push({ label: '默认亮度', value: (cfg.brightness ?? 80) + '%' })
+          rows.push({ label: '默认色温', value: (cfg.color === 'warm' ? '暖光' : cfg.color === 'cool' ? '冷光' : '自然光') })
+          break
+        case 'ac':
+          rows.push({ label: '默认温度', value: (cfg.temperature ?? 26) + '℃' })
+          rows.push({ label: '默认模式', value: ({cool:'制冷',heat:'制热',auto:'自动',dry:'除湿',fan:'送风'})[cfg.mode] || '自动' })
+          rows.push({ label: '默认风速', value: (cfg.windSpeed ?? 3) + '档' })
+          break
+        case 'curtain':
+          rows.push({ label: '默认开合度', value: (cfg.openPercent ?? 70) + '%' })
+          break
+        case 'speaker':
+          rows.push({ label: '默认音量', value: (cfg.volume ?? 50) + '%' })
+          break
+        case 'tv':
+          rows.push({ label: '默认音量', value: (cfg.volume ?? 40) + '%' })
+          break
+        case 'air':
+          rows.push({ label: '默认模式', value: ({auto:'自动',sleep:'睡眠',strong:'强劲',eco:'节能'})[cfg.mode] || '自动' })
+          rows.push({ label: '默认档位', value: (cfg.fanLevel ?? 2) + '档' })
+          break
+        case 'washer':
+          rows.push({ label: '默认程序', value: ({standard:'标准',quick:'快洗',heavy:'大件',gentle:'轻柔'})[cfg.mode] || '标准' })
+          break
+        case 'fridge':
+          rows.push({ label: '冷藏温度', value: (cfg.tempCold ?? 5) + '℃' })
+          rows.push({ label: '冷冻温度', value: (cfg.tempFreeze ?? -18) + '℃' })
+          break
+        case 'oven':
+          rows.push({ label: '默认温度', value: (cfg.temp ?? 180) + '℃' })
+          rows.push({ label: '默认时间', value: (cfg.time ?? 15) + '分钟' })
+          break
+        case 'camera':
+          rows.push({ label: '夜视', value: cfg.nightVision ? '开启' : '关闭' })
+          rows.push({ label: '移动侦测', value: cfg.motionDetect ? '开启' : '关闭' })
+          rows.push({ label: '录制', value: cfg.recording ? '开启' : '关闭' })
+          break
+        case 'sensor':
+          rows.push({ label: '警报', value: cfg.alarm ? '开启' : '关闭' })
+          break
+      }
+      return rows
     }
   },
   methods: {
@@ -171,9 +256,44 @@ export default {
       if (this.scannedType && this.scannedType !== type.id) {
         uni.showToast({ title: `此设备类型为${type.name}`, icon: 'none' })
       }
+      // 自动建议设备名：位置 + 古风后缀
+      const suffix = TYPE_DEFAULT_NAME_SUFFIX[type.id] || type.name
+      const loc = this.selectedLocation ? this.selectedLocation : ''
+      if (!this.deviceName.trim()) {
+        this.deviceName = loc ? `${loc}${suffix}` : suffix
+      }
+      // 默认描述
+      if (!this.deviceDesc.trim()) {
+        const descMap = {
+          light: '可调亮度与色温，营造诗意氛围',
+          ac: '冷暖自如，四季相宜',
+          curtain: '开合随心，光影有致',
+          tv: '高清画质，闲时雅赏',
+          speaker: '音韵流转，一室生香',
+          air: '净风拂面，如沐山林',
+          sensor: '知寒暑，辨燥湿',
+          washer: '浣洗如新，衣袂生香',
+          fridge: '冷藏冷冻，物得其所',
+          oven: '火候相宜，烹饪得趣',
+          camera: '看家护院，昼夜不怠'
+        }
+        this.deviceDesc = descMap[type.id] || ''
+      }
     },
     onLocationChange(e) {
+      const prev = this.selectedLocation
       this.selectedLocation = this.locations[e.detail.value]
+      // 首次选位置时自动补全建议名前缀
+      if (!this.deviceName.trim() && this.selectedType) {
+        const suffix = TYPE_DEFAULT_NAME_SUFFIX[this.selectedType] || ''
+        this.deviceName = `${this.selectedLocation}${suffix}`
+      } else if (prev && this.deviceName.startsWith(prev)) {
+        // 如果之前的名字是以旧位置为前缀的，替换一下
+        const suffix = TYPE_DEFAULT_NAME_SUFFIX[this.selectedType] || ''
+        if (this.deviceName === `${prev}${suffix}`) {
+          this.deviceName = `${this.selectedLocation}${suffix}`
+        }
+      }
     },
     parseScanCode(code) {
       let brand = ''
@@ -283,7 +403,8 @@ export default {
     },
     doAddDevice() {
       const brandName = this.brands.find(b => b.id === this.selectedBrand)?.name || ''
-      const typeName = this.deviceTypes.find(t => t.id === this.selectedType)?.name || ''
+      const typeName = getDeviceTypeName(this.selectedType) || this.deviceTypes.find(t => t.id === this.selectedType)?.name || ''
+      const defaultCfg = getDeviceDefaultConfig(this.selectedType) || {}
 
       addDevice({
         name: this.deviceName.trim(),
@@ -293,7 +414,8 @@ export default {
         typeName: typeName,
         location: this.selectedLocation,
         description: this.deviceDesc,
-        scanCode: this.scanResult
+        scanCode: this.scanResult,
+        ...defaultCfg
       })
 
       uni.showToast({ title: '添加成功', icon: 'success' })
@@ -487,6 +609,41 @@ export default {
   color: #2F1810;
   font-family: "STKaiti", "KaiTi", serif;
 }
+
+.default-section { margin-bottom: 40rpx; }
+
+.default-card {
+  background: #FFF8DC;
+  border: 2rpx solid #D2B48C;
+  border-radius: 20rpx;
+  padding: 24rpx 30rpx;
+}
+
+.default-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14rpx 0;
+  border-bottom: 1rpx dashed #DEB887;
+}
+
+.default-row:last-child { border-bottom: none; }
+
+.default-label {
+  font-size: 26rpx;
+  color: #6B4226;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+
+.default-value {
+  font-size: 26rpx;
+  color: #2F1810;
+  font-weight: bold;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+
+.default-tip { padding: 20rpx 0; text-align: center; }
+.default-tip-text { font-size: 24rpx; color: #8B7355; font-family: "STKaiti", "KaiTi", serif; }
 
 .scan-section {
   margin-bottom: 40rpx;

@@ -71,7 +71,43 @@
 </template>
 
 <script>
-import { addFamily } from '@/store/index.js'
+import { addFamily, setCurrentFamily, getStore, requireLogin } from '@/store/index.js'
+
+const TEMPLATE_PRESETS = {
+  1: {
+    name: '温馨之家',
+    desc: '家和万事兴，岁月静好',
+    suffix: '雅居'
+  },
+  2: {
+    name: '雅致书房',
+    desc: '半榻清风，一帘明月，墨香绕梁',
+    suffix: '书斋'
+  },
+  3: {
+    name: '现代简约',
+    desc: '素雅明窗净几，心远地自偏',
+    suffix: '小筑'
+  },
+  4: {
+    name: '田园风光',
+    desc: '采菊东篱下，悠然见南山',
+    suffix: '田园'
+  },
+  5: {
+    name: '清风明月',
+    desc: '明月几时有，把酒问青天',
+    suffix: '月居'
+  },
+  6: {
+    name: '山林隐逸',
+    desc: '空山新雨后，天气晚来秋',
+    suffix: '山居'
+  }
+}
+
+// 古风家庭名前缀（用于生成默认名字）
+const POETIC_PREFIXES = ['清风', '明月', '竹影', '墨香', '听雨', '栖鹤', '望云', '抚琴']
 
 export default {
   data() {
@@ -84,30 +120,53 @@ export default {
         { id: 1, name: '温馨之家', icon: '🏠' },
         { id: 2, name: '雅致书房', icon: '📚' },
         { id: 3, name: '现代简约', icon: '🏢' },
-        { id: 4, name: '田园风光', icon: '🌿' }
+        { id: 4, name: '田园风光', icon: '🌿' },
+        { id: 5, name: '清风明月', icon: '🌙' },
+        { id: 6, name: '山林隐逸', icon: '⛰️' }
       ]
     }
+  },
+  watch: {
+    selectedTemplate(newId) {
+      const preset = TEMPLATE_PRESETS[newId]
+      if (!preset) return
+      if (!this.familyDesc.trim()) {
+        this.familyDesc = preset.desc
+      }
+    }
+  },
+  onLoad() {
+    requireLogin()
   },
   methods: {
     goBack() {
       uni.navigateBack()
     },
+    pickRandomPoeticName() {
+      const pick = POETIC_PREFIXES[Math.floor(Math.random() * POETIC_PREFIXES.length)]
+      const preset = TEMPLATE_PRESETS[this.selectedTemplate]
+      const suffix = preset?.suffix || '雅居'
+      return `${pick}${suffix}`
+    },
     createFamily() {
       if (!this.familyName.trim()) {
-        uni.showToast({
-          title: '请输入家庭名称',
-          icon: 'none'
-        })
-        return
+        // 没填名字就按模板随机起一个
+        this.familyName = this.pickRandomPoeticName()
+        uni.showToast({ title: `已自动命名：${this.familyName}`, icon: 'none' })
       }
-
       const template = this.templates.find(t => t.id === this.selectedTemplate)
-      addFamily({
+      const family = addFamily({
         name: this.familyName.trim(),
         address: this.familyAddress.trim(),
-        description: this.familyDesc.trim() || '家和万事兴',
+        description: this.familyDesc.trim() || (template?.name ? `${template.name}，家和万事兴` : '家和万事兴'),
         template: template ? template.name : '温馨之家'
       })
+
+      // 如果当前没选家庭就设为当前
+      const s = getStore()
+      if (!s.currentFamilyId && family && family.id) {
+        setCurrentFamily(family.id)
+      }
 
       uni.showToast({
         title: '创建成功',
@@ -115,7 +174,11 @@ export default {
       })
 
       setTimeout(() => {
-        uni.navigateBack()
+        if (!s.families || s.families.length <= 1) {
+          uni.switchTab({ url: '/pages/index/index' })
+        } else {
+          uni.navigateBack()
+        }
       }, 1500)
     }
   }

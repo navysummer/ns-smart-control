@@ -1,24 +1,95 @@
-# Nestjs specific
-/dist
-/node_modules
-/build
-/tmp
-
-# Logs
-logs
-*.log
+# ============= 依赖 & Node 相关 =============
+node_modules/
+package-lock.json.backup
+.yarn
+.pnpm-store
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+*.log
 
-# dotenv environment variable files
+# ============= uni-app / uni-app x 编译产物 =============
+# uni-app 官方默认构建/运行产物目录
+unpackage/
+dist/
+build/
+
+# uni-app 按需编译时的临时产物
+.uni/
+.uni-app/
+.uni-app-x/
+.uvue/
+.hbuilderx/
+
+# ============= Vite 相关 =============
+.vite/
+.cache/
+
+# ============= 各端小程序平台输出目录 =============
+#   （如需要提交特定端编译结果请手动单独跟踪）
+#   HBuilderX 在项目根生成的各端独立输出：
+/dist/dev/mp-weixin/
+/dist/build/mp-weixin/
+/dist/dev/mp-alipay/
+/dist/build/mp-alipay/
+/dist/dev/mp-baidu/
+/dist/build/mp-baidu/
+/dist/dev/mp-toutiao/
+/dist/build/mp-toutiao/
+/dist/dev/mp-qq/
+/dist/build/mp-qq/
+/dist/dev/app/
+/dist/build/app/
+/dist/dev/h5/
+/dist/build/h5/
+
+# 微信开发者工具独立项目目录
+miniprogram_npm/
+project.config.json
+project.private.config.json
+project.tt.json
+project.swan.json
+.idea/
+
+# ============= 编辑器 / IDE =============
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ============= 环境变量 & 敏感文件 =============
 .env
-.env.development
-.env.test
-.env.production
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+private/
+private.key
+credentials.json
 
-# temp directory
-.temp
-.tmp
+# ============= 临时文件 =============
+.tmp/
+.temp/
+tmp/
+temp/
+*.tmp
+*.bak
+*.old
+*.patch
+*.diff
+
+# 项目内 src 备份（安装依赖时我们生成过的备份，避免被跟踪）
+src/package.json.bak

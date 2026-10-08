@@ -1,29 +1,41 @@
 {
   "name": "ns-smart-control",
   "version": "1.0.0",
-  "description": "智能控制小程序 - 古风诗意风格",
+  "description": "智能控制小程序 - 古风诗意风格（uni-app x / vue3 / vite 兼容）",
   "main": "main.js",
   "scripts": {
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:mp-weixin": "uni build -p mp-weixin",
     "dev:h5": "uni",
-    "build:h5": "uni build"
+    "build:h5": "uni build",
+    "dev:app": "uni -p app",
+    "build:app": "uni build -p app",
+    "dev:mp-alipay": "uni -p mp-alipay",
+    "build:mp-alipay": "uni build -p mp-alipay"
   },
   "dependencies": {
-    "@dcloudio/uni-app": "3.0.0-4010120250128001",
-    "@dcloudio/uni-app-plus": "3.0.0-4010120250128001",
-    "@dcloudio/uni-components": "3.0.0-4010120250128001",
-    "@dcloudio/uni-h5": "3.0.0-4010120250128001",
-    "@dcloudio/uni-mp-weixin": "3.0.0-4010120250128001",
-    "vue": "^3.4.0"
+    "@dcloudio/uni-app": "3.0.0-5020620260917001",
+    "@dcloudio/uni-app-plus": "3.0.0-5020620260917001",
+    "@dcloudio/uni-components": "3.0.0-5020620260917001",
+    "@dcloudio/uni-h5": "3.0.0-5020620260917001",
+    "@dcloudio/uni-mp-weixin": "3.0.0-5020620260917001",
+    "@dcloudio/uni-mp-alipay": "3.0.0-5020620260917001",
+    "@dcloudio/uni-mp-baidu": "3.0.0-5020620260917001",
+    "@dcloudio/uni-mp-toutiao": "3.0.0-5020620260917001",
+    "@dcloudio/uni-mp-qq": "3.0.0-5020620260917001",
+    "vue": "^3.4.38"
   },
   "devDependencies": {
-    "@dcloudio/types": "^3.4.0",
-    "@dcloudio/uni-automator": "3.0.0-4010120250128001",
-    "@dcloudio/uni-cli-shared": "3.0.0-4010120250128001",
-    "@dcloudio/uni-stacktracey": "3.0.0-4010120250128001",
-    "@dcloudio/vite-plugin-uni": "3.0.0-4010120250128001",
-    "typescript": "^5.3.0",
-    "vite": "^5.0.0"
+    "@dcloudio/types": "^3.4.13",
+    "@dcloudio/uni-automator": "3.0.0-5020620260917001",
+    "@dcloudio/uni-cli-shared": "3.0.0-5020620260917001",
+    "@dcloudio/uni-stacktracey": "3.0.0-5020620260917001",
+    "@dcloudio/vite-plugin-uni": "3.0.0-5020620260917001",
+    "typescript": "^5.5.4",
+    "sass": "^1.77.8",
+    "vite": "^5.4.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }

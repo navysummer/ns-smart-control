@@ -448,10 +448,13 @@ export default {
     if (options && options.id) {
       this.deviceId = options.id
       this.loadDevice()
+    } else {
+      uni.showToast({ title: '缺少设备ID', icon: 'none' })
+      setTimeout(() => uni.switchTab({ url: '/pages/index/index' }), 800)
     }
   },
   onShow() {
-    this.loadDevice()
+    if (this.deviceId) this.loadDevice()
   },
   onUnload() {
     if (this._washerTimer) {

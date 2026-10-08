@@ -35,6 +35,35 @@
             <text class="stat-label">场景</text>
           </view>
         </view>
+
+        <view class="stats-overview" v-if="familyDevices.length">
+          <view class="overview-row">
+            <view class="overview-item">
+              <text class="overview-dot online"></text>
+              <text class="overview-label">在线</text>
+              <text class="overview-num">{{ onlineDeviceCount }}/{{ familyDevices.length }}</text>
+            </view>
+            <view class="overview-divider"></view>
+            <view class="overview-item">
+              <text class="overview-dot powered"></text>
+              <text class="overview-label">运行中</text>
+              <text class="overview-num">{{ poweredDeviceCount }}</text>
+            </view>
+            <view class="overview-divider"></view>
+            <view class="overview-item">
+              <text class="overview-dot scene"></text>
+              <text class="overview-label">场景</text>
+              <text class="overview-num">{{ familyScenes.length }}</text>
+            </view>
+          </view>
+          <view class="overview-bar">
+            <view class="bar-filled" :style="{ width: onlinePercent + '%', background: '#6A9955' }"></view>
+            <view class="bar-filled" :style="{ width: poweredPercent + '%', marginLeft: '2rpx', background: '#CD853F' }"></view>
+          </view>
+          <view class="overview-tip">
+            <text class="overview-tip-text">{{ overviewTip }}</text>
+          </view>
+        </view>
       </view>
 
       <view class="quick-actions">
@@ -53,6 +82,22 @@
         <view class="action-card" v-if="isOwner" @tap="showFamilySettings">
           <text class="action-icon">⚙️</text>
           <text class="action-text">家庭设置</text>
+        </view>
+        <view class="action-card secondary" @tap="powerAll(true)">
+          <text class="action-icon">☀️</text>
+          <text class="action-text">一键全开</text>
+        </view>
+        <view class="action-card secondary" @tap="powerAll(false)">
+          <text class="action-icon">🌙</text>
+          <text class="action-text">一键全关</text>
+        </view>
+        <view class="action-card secondary" @tap="goHome">
+          <text class="action-icon">🏡</text>
+          <text class="action-text">返回首页</text>
+        </view>
+        <view class="action-card secondary" @tap="showAbout">
+          <text class="action-icon">🏷️</text>
+          <text class="action-text">家庭信息</text>
         </view>
       </view>
 
@@ -124,7 +169,7 @@
 </template>
 
 <script>
-import { getStore, loadLocal, setCurrentFamily, removeFamily, toggleDevicePower, updateFamily, activateScene, removeScene, requireLogin, getCurrentUserRole } from '@/store/index.js'
+import { getStore, loadLocal, setCurrentFamily, removeFamily, toggleDevicePower, updateFamily, activateScene, removeScene, requireLogin, getCurrentUserRole, powerOffAllDevices, batchUpdateDevices, getDeviceIcon } from '@/store/index.js'
 
 export default {
   data() {
@@ -145,6 +190,26 @@ export default {
     },
     isOwner() {
       return getCurrentUserRole() === '家长'
+    },
+    onlineDeviceCount() { return this.familyDevices.filter(d => d.isOnline).length },
+    poweredDeviceCount() { return this.familyDevices.filter(d => d.isPowerOn).length },
+    onlinePercent() {
+      const total = this.familyDevices.length
+      return total ? Math.round((this.onlineDeviceCount / total) * 100) : 0
+    },
+    poweredPercent() {
+      const total = this.familyDevices.length
+      return total ? Math.min(98, Math.round((this.poweredDeviceCount / total) * 100)) : 0
+    },
+    overviewTip() {
+      const total = this.familyDevices.length
+      if (!total) return '家中暂无设备'
+      const onl = this.onlineDeviceCount
+      const pwr = this.poweredDeviceCount
+      if (onl === 0) return '设备当前均离线，可检查家中网络'
+      if (pwr === 0) return '家中设备均已待机，节能有道'
+      if (pwr === total) return '家中设备全数运行，可用一键全关'
+      return `目前 ${pwr}/${total} 台设备运行中，一切安好`
     }
   },
   onShow() {
@@ -189,6 +254,36 @@ export default {
     },
     goToCreateFamily() {
       uni.navigateTo({ url: '/pages/family/create' })
+    },
+    powerAll(on) {
+      if (!this.family) return
+      const ids = this.familyDevices.map(d => d.id)
+      if (!ids.length) {
+        uni.showToast({ title: '家中暂无设备', icon: 'none' })
+        return
+      }
+      if (on) {
+        batchUpdateDevices(ids, { isPowerOn: true, isOnline: true })
+      } else {
+        // 优先用已有的全关接口
+        powerOffAllDevices()
+      }
+      this.refreshData()
+      uni.showToast({ title: on ? '已一键开启' : '已一键关闭', icon: 'success' })
+    },
+    goHome() {
+      uni.switchTab({ url: '/pages/index/index' })
+    },
+    showAbout() {
+      if (!this.family) return
+      const id = this.family.id || '-'
+      const createdAt = this.family.createdAt ? new Date(this.family.createdAt).toLocaleString('zh-CN') : '-'
+      uni.showModal({
+        title: '家庭信息',
+        content: `名称：${this.family.name}\n描述：${this.family.description || '无'}\n成员数：${this.family.memberCount || 1}\n家庭ID：${id}\n创建时间：${createdAt}`,
+        showCancel: false,
+        confirmColor: '#8B4513'
+      })
     },
     showFamilySettings() {
       if (!this.family) return
@@ -384,14 +479,79 @@ export default {
   font-family: "STKaiti", "KaiTi", serif;
 }
 
+.stats-overview {
+  margin-top: 28rpx;
+  padding: 24rpx 28rpx;
+  background: linear-gradient(135deg, rgba(139,69,19,0.05) 0%, rgba(205,133,63,0.08) 100%);
+  border-radius: 20rpx;
+  border: 1rpx solid rgba(139,69,19,0.15);
+}
+
+.overview-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
+}
+
+.overview-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+}
+
+.overview-divider {
+  width: 1rpx;
+  height: 40rpx;
+  background: #D2B48C;
+}
+
+.overview-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+.overview-dot.online { background: #6A9955; box-shadow: 0 0 0 4rpx rgba(106,153,85,0.18); }
+.overview-dot.powered { background: #CD853F; box-shadow: 0 0 0 4rpx rgba(205,133,63,0.18); }
+.overview-dot.scene { background: #8B4513; box-shadow: 0 0 0 4rpx rgba(139,69,19,0.18); }
+
+.overview-label { font-size: 24rpx; color: #6B4226; font-family: "STKaiti", "KaiTi", serif; }
+.overview-num { font-size: 26rpx; color: #2F1810; font-weight: bold; font-family: "STKaiti", "KaiTi", serif; }
+
+.overview-bar {
+  display: flex;
+  align-items: center;
+  height: 10rpx;
+  background: #F5DEB3;
+  border-radius: 10rpx;
+  overflow: hidden;
+  padding: 0 2rpx;
+}
+
+.bar-filled {
+  height: 100%;
+  border-radius: 10rpx;
+}
+
+.overview-tip { margin-top: 14rpx; text-align: center; }
+.overview-tip-text {
+  font-size: 22rpx;
+  color: #8B7355;
+  font-family: "STKaiti", "KaiTi", serif;
+}
+
 .quick-actions {
   display: flex;
   justify-content: space-between;
   margin-bottom: 30rpx;
+  flex-wrap: wrap;
+  gap: 16rpx 0;
 }
 
 .action-card {
-  width: calc(25% - 15rpx);
+  width: calc(25% - 12rpx);
   background: #FFF8DC;
   border-radius: 20rpx;
   padding: 24rpx 0;
@@ -399,6 +559,11 @@ export default {
   flex-direction: column;
   align-items: center;
   border: 2rpx solid #D2B48C;
+}
+
+.action-card.secondary {
+  background: linear-gradient(135deg, rgba(255,250,240,0.9) 0%, rgba(255,248,220,0.95) 100%);
+  border: 2rpx dashed #DEB887;
 }
 
 .action-icon { font-size: 48rpx; }

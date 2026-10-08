@@ -58,6 +58,24 @@
             <text class="menu-arrow">→</text>
           </view>
         </view>
+
+        <view class="menu-card">
+          <view class="menu-item" @tap="showStatistics">
+            <view class="menu-icon">📊</view>
+            <text class="menu-text">数据统计</text>
+            <text class="menu-arrow">→</text>
+          </view>
+          <view class="menu-item" @tap="handleReSeedDemo">
+            <view class="menu-icon">🪴</view>
+            <text class="menu-text">{{ hasDemo ? '重置示例数据' : '生成示例数据' }}</text>
+            <text class="menu-arrow">→</text>
+          </view>
+          <view class="menu-item danger" @tap="handleClearData">
+            <view class="menu-icon">🧹</view>
+            <text class="menu-text">清空所有数据</text>
+            <text class="menu-arrow">→</text>
+          </view>
+        </view>
       </view>
 
       <view class="logout-btn" @tap="handleLogout">
@@ -72,7 +90,7 @@
 </template>
 
 <script>
-import { loadLocal, getStore, login as storeLogin, logout as storeLogout, requireLogin, getCurrentUserRole } from '@/store/index.js'
+import { loadLocal, getStore, login as storeLogin, logout as storeLogout, requireLogin, getCurrentUserRole, resetDemoData, reSeedDemoData, hasDemoData } from '@/store/index.js'
 
 export default {
   data() {
@@ -85,6 +103,9 @@ export default {
       sceneCount: 0,
       currentRole: '家长'
     }
+  },
+  computed: {
+    hasDemo() { return hasDemoData() }
   },
   onShow() {
     if (!requireLogin()) return
@@ -151,6 +172,65 @@ export default {
             setTimeout(() => {
               uni.reLaunch({ url: '/pages/login/index' })
             }, 1500)
+          }
+        }
+      })
+    },
+    showStatistics() {
+      const s = getStore()
+      const total = s.devices.length
+      const online = s.devices.filter(d => d.isOnline).length
+      const powered = s.devices.filter(d => d.isPowerOn).length
+      const types = {}
+      s.devices.forEach(d => { types[d.type] = (types[d.type] || 0) + 1 })
+      const typeStr = Object.keys(types).length
+        ? Object.entries(types).map(([k, v]) => {
+            const name = ({light:'灯具',ac:'空调',curtain:'窗帘',air:'净化器',tv:'电视',speaker:'音箱',camera:'摄像头',washer:'洗衣机',fridge:'冰箱',oven:'烤箱',sensor:'传感器'})[k] || k
+            return `${name} ${v}`
+          }).join(' / ')
+        : '暂无设备'
+      const memCount = s.members.length || (s.families.length ? 1 : 0)
+      const content =
+        `家庭数：${s.families.length}\n` +
+        `设备总数：${total}（在线 ${online}，运行 ${powered}）\n` +
+        `设备类型：${typeStr}\n` +
+        `场景总数：${s.scenes.length}\n` +
+        `成员记录：${memCount}\n` +
+        `当前角色：${this.currentRole}`
+      uni.showModal({
+        title: '数据统计',
+        content,
+        showCancel: false,
+        confirmColor: '#8B4513'
+      })
+    },
+    handleReSeedDemo() {
+      const tip = hasDemoData()
+        ? '将清空当前家庭/设备/场景，并恢复一套示例数据，是否继续？'
+        : '将为您生成一套示例家庭/设备/场景数据，是否继续？'
+      uni.showModal({
+        title: hasDemoData() ? '重置示例数据' : '生成示例数据',
+        content: tip,
+        confirmColor: '#8B4513',
+        success: (res) => {
+          if (res.confirm) {
+            reSeedDemoData()
+            this.refreshData()
+            uni.showToast({ title: '已恢复示例', icon: 'success' })
+          }
+        }
+      })
+    },
+    handleClearData() {
+      uni.showModal({
+        title: '清空所有数据',
+        content: '将删除所有家庭、设备、场景、成员数据（保留登录态），此操作不可撤销，是否继续？',
+        confirmColor: '#B22222',
+        success: (res) => {
+          if (res.confirm) {
+            resetDemoData()
+            this.refreshData()
+            uni.showToast({ title: '已清空', icon: 'success' })
           }
         }
       })
@@ -291,6 +371,8 @@ export default {
 }
 
 .menu-item:last-child { border-bottom: none; }
+
+.menu-item.danger .menu-text { color: #B22222; }
 
 .menu-icon { font-size: 36rpx; margin-right: 20rpx; }
 
