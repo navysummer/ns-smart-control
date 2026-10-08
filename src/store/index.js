@@ -72,6 +72,7 @@ export const login = (userInfo) => {
   // 首次登录注入示例数据，便于体验
   if (!store.families || store.families.length === 0) seedDemoData()
   notify()
+  return store.userInfo
 }
 
 export const logout = () => {
@@ -215,8 +216,8 @@ export const getDeviceDefaultConfig = (type) => {
     washer: { isPowerOn: false, mode: 'standard', remaining: 0 },
     fridge: { isPowerOn: true, tempCold: 5, tempFreeze: -18 },
     oven: { isPowerOn: false, temp: 180, time: 15 },
-    camera: { isPowerOn: true, nightVision: true },
-    sensor: { isPowerOn: true, alarm: false }
+    camera: { isPowerOn: true, nightVision: true, motionDetect: false, recording: false },
+    sensor: { isPowerOn: true, alarm: false, temperature: 24, humidity: 55, pm25: 20, battery: 85 }
   }
   return map[type] || { isPowerOn: true }
 }
@@ -310,7 +311,9 @@ export const toggleDevicePower = (deviceId) => {
     pushDeviceLog(device, device.isPowerOn ? '开启' : '关闭')
     saveLocal()
     notify()
+    return device
   }
+  return null
 }
 
 export const setDevicePower = (deviceId, on) => {
